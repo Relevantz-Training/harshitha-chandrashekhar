@@ -2,8 +2,7 @@
 
 ## Overview
 
-An enhanced version of Assignment-1 that replaces the in-memory mock store with
-a real **SQLite** database (via **Flask-SQLAlchemy**).  The project follows a
+An enhanced version of Assignment-1 that replaces the in-memory mock store with a real **SQLite** database (via **Flask-SQLAlchemy**).  The project follows a
 clean, layered architecture:
 
 ```
@@ -38,7 +37,7 @@ HTTP Request
 ```
 assignment-2/
 ├── main.py                         # App factory & entry point
-├── config.py                       # Dev / Test / Prod configurations
+├── config.py                       # Application configuration
 ├── database.py                     # SQLAlchemy instance
 ├── requirements.txt
 ├── pytest.ini
@@ -75,7 +74,7 @@ python main.py
 ```
 
 The server starts at `http://127.0.0.1:5000`.  
-Three sample customers are auto-seeded on first run (development mode).
+Three sample customers are auto-seeded on first run.
 
 ## API Endpoints
 
@@ -95,10 +94,9 @@ POST /customers
 Content-Type: application/json
 
 {
-  "name":    "Jane Doe",
-  "email":   "jane@example.com",
-  "phone":   "555-123-4567",
-  "address": "42 Maple Ave"   ← optional
+  "name":  "Jane Doe",
+  "email": "jane@example.com",
+  "phone": "555-123-4567"
 }
 ```
 ```json
@@ -107,8 +105,7 @@ HTTP 201 Created
   "id": 4,
   "name": "Jane Doe",
   "email": "jane@example.com",
-  "phone": "555-123-4567",
-  "address": "42 Maple Ave"
+  "phone": "555-123-4567"
 }
 ```
 
@@ -131,7 +128,7 @@ DELETE /customers/4
 ## Running Tests
 
 ```bash
-pytest -v
+python -m pytest -v
 ```
 
 - **`test_customer_service.py`** – pure unit tests; repository is mocked with
@@ -141,14 +138,12 @@ pytest -v
 
 ## Key Enhancements over Assignment-1
 
-| Feature                   | Assignment-1      | Assignment-2               |
-|---------------------------|-------------------|----------------------------|
-| Data storage              | In-memory list    | SQLite via SQLAlchemy ORM  |
+| Feature                   | Assignment-1      | Assignment-2                    |
+|---------------------------|-------------------|---------------------------------|
+| Data storage              | In-memory list    | SQLite via SQLAlchemy ORM       |
 | Architecture layers       | 2 (model + route) | 4 (model, repo, service, route) |
-| Validation                | Minimal           | Service-layer validation   |
-| Duplicate e-mail guard    | ✗                 | ✔                          |
-| Address field             | ✗                 | ✔ (optional)               |
-| Environment configs       | ✗                 | Dev / Test / Prod          |
-| Unit tests (mocked)       | ✗                 | ✔ `test_customer_service`  |
-| Integration tests         | ✔                 | ✔ `test_customer_api`      |
-| Dev seed data             | Hard-coded mock   | Auto-seeded to DB          |
+| Validation                | Minimal           | Service-layer validation        |
+| Duplicate e-mail guard    | ✗                 | ✔                               |
+| Unit tests (mocked)       | ✗                 | ✔ `test_customer_service`       |
+| Integration tests         | ✔                 | ✔ `test_customer_api`           |
+| Seed data                 | Hard-coded mock   | Auto-seeded to SQLite DB        |
